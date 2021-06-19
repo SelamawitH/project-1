@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: first
+version: 1.0
+/welcome msg:
+  post:
+    queryParameters:
+      name:
+        type: string
+      date:
+        type: date-only
+    responses:
+      200:
+        body:
+          application/json:
+         
+            example:
+              {
+                 Hello selamawit,welcome to mulesoft,today is 06/19/2021
+              }
+      404:
+              body:
+                application/json:
+                  example:
+                     {
+                    "resource not found !"}     
+              
