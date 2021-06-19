@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="0d692002-89af-4f4d-bf8a-f88b99346246" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="project-1Flow" doc:id="688a2e32-01fc-499c-84c6-d10354126a2e" >
+		<http:listener doc:name="Listener" doc:id="8014c0d7-e956-494c-a5dc-0c0ab20a4545" config-ref="HTTP_Listener_config" path="/project"/>
+		<ee:transform doc:name="Transform Message" doc:id="d19842b5-1f2b-47f7-81c3-7959988decac" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+var name = attributes.queryParams.name
+var date= now() as String {format: "MM-dd-y"}
+---
+ "Hello" ++ " " ++ name ++" " ++ "welcome to mulesofte,today is"++ " " ++ date	]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="11f33fb4-30e1-4619-bb2e-3748b7f6e45d" />
+	</flow>
+</mule>
